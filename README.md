@@ -33,7 +33,7 @@ git clone https://github.com/ApteroSAS/arena-client.git
 
 2.To be able to  run  the server code locally, you'll need to enter to folder, and install the required dependencies first
 ```
-cd ColyseusServer/my-colyseus-app
+cd my-colyseus-app
 npm install
 ```
 3.To configure the server,go to the development.env and  the arena.env  files and  set the room name and the maximum number of the allowed clients to connect into the room.
@@ -266,9 +266,13 @@ npm test
 The test command requires a few arguments to work:
 
 --script: The custom  worker script the tool is going to use
+
 --endpoint: Your server endpoint (If you want to run your server locally, go to https://github.com/ApteroSAS/arena-server.git,by default uses local server ws://localhost:2567)
+
 --room: Name of the room you'd like to connect to
+
 --numClients: Number of clients you'd like to connect into the room.
+
 # Example 
 You'll need two terminal windows open to be able to run this. One for the server, and one for the test:
 Connecting 2 clients into a "my_room" room
