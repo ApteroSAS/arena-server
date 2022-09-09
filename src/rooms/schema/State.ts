@@ -46,110 +46,18 @@ export class Player extends Schema {
 export class State extends Schema {
   
   @filterChildren(function(this:any,client: any, key: any, value: Player,root:State) {  
-
-    // c'est le meme client
-    if(client.sessionId==key){
-      return true;
-    }
-
-    else{
-      const currentPlayer = this.players.get(client.sessionId);
-      var data=this.players.get(client.sessionId).data.get(key);
-      //check if the player joined the room already
-      if(!currentPlayer.data.get(key).join){
-        const data_=new Filtredata();
-        data_.join=true;
-        data_.lastUpdate=Date.now();
-        this.players.get(client.sessionId).data.set(key,data_);
-        return true;
-      }
-      //the client already joined
-      else{
-       /* if(value.lastUpdate-data.lastUpdate<0){
-          console.log(value.lastUpdate,data.lastUpdate, value.lastUpdate-data.lastUpdate);
-        }*/
-          var a = value.x - currentPlayer.x;
-          var b = value.y - currentPlayer.y;
-          var distance=(Math.sqrt(a * a + b * b)) <=2;
-          if(distance)
-          {
-            const data_=new Filtredata();
-            data_.join=true;
-            data_.lastUpdate=Date.now();
-            this.players.get(client.sessionId).data.set(key,data_);
-            return true;
-          }
-          else{
-            if(Date.now()-data.lastUpdate>500){
-              const data_=new Filtredata();
-              data_.join=true;
-              data_.lastUpdate=Date.now();
-              this.players.get(client.sessionId).data.set(key,data_);
-              console.log(value.x);
-              return true;
-              }
-              else{
-                return false;
-                }
-
-          }
-      }
-    }
+    return true;
   })
   @type({ map: Player }) players = new MapSchema<Player>();
   @filterChildren(function(this:any,client: any, key: any, value: Player,root:State) { 
-    if(client.sessionId==key){
       return true;
-    }
-    else{
-      const currentPlayer = this.players.get(client.sessionId);
-      var data=this.playersFromOtherRooms.get(key).data.get(client.sessionId);
-      //check if the player joined the room already
-      if(!data.join){
-        const data_=new Filtredata();
-        data_.join=true;
-        data_.lastUpdate=Date.now();
-        this.playersFromOtherRooms.get(key).data.set(client.sessionId,data_);
-        return true;
-      }
-      //the client already joined
-      else{
-          var a = value.x - currentPlayer.x;
-          var b = value.y - currentPlayer.y;
-          var distance=(Math.sqrt(a * a + b * b)) <=2;
-          if(distance)
-          {
-            const data_=new Filtredata();
-            data_.join=true;
-            data_.lastUpdate=Date.now();
-            this.playersFromOtherRooms.get(key).data.set(client.sessionId,data_);
-            console.log(value.x);
-            return true;
-          }
-          else{
-            if(Math.abs(value.lastUpdate-data.lastUpdate)>500){
-              const data_=new Filtredata();
-              data_.join=true;
-              data_.lastUpdate=Date.now();
-              this.playersFromOtherRooms.get(key).data.set(client.sessionId,data_);
-              console.log(value.x);
-                return true;
-              }
-              else{
-                console.log(value.x);
-                return false;
-                }
-
-          }
-      }
-    }
-
   })
   @type({ map: Player }) playersFromOtherRooms = new MapSchema<Player>();
   @type("int64") clients=0;
   @type("string") event='';
   @type("int64") clientsOtherRooms=0;
   @type("int64") yCord=0;
+  @type({ map: Player }) players2 = new MapSchema<Player>();
   movePlayer(sessionId: string, x: number,y:number,xr:number,yr:number,lastUpdate:number,isClient:boolean){
 
     if(isClient){
@@ -170,8 +78,13 @@ export class State extends Schema {
       this.players.get(sessionId).yr=yr;
       this.players.get(sessionId).lastUpdate=lastUpdate;
       this.event='move';
-      
+      this.players2.get(sessionId).x=x;
+      this.players2.get(sessionId).y=y;
+      this.players2.get(sessionId).xr=xr;
+      this.players2.get(sessionId).yr=yr;
+      this.players2.get(sessionId).lastUpdate=lastUpdate;      
     }
+    
 }
  
 //function to move client who belongs to  other room

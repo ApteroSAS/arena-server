@@ -31,9 +31,6 @@ async function connect() {
 }
 try {
   (async () => {
-    //console.log(await connect());
-    //connect();
-
     connect().then(function (room) {
       room.onError(() => {
         var message = "error";
@@ -58,8 +55,8 @@ try {
       };
 
       setInterval(function () {
-        x = x + 0.1;
-        //y=y+0.04;
+        x = x + 1;
+        y=y+0.5;
         //xr=xr+0.01;
         //yr=yr+0.01;
         if (x >= 2) {
@@ -76,7 +73,7 @@ try {
           yr: yr,
           lastUpdate: Date.now(),
         });
-      },process.env.PATCH_RATES);
+      },5000);
       // the value is 15
     });
     /*
