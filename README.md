@@ -26,17 +26,11 @@ TypeScript supported
 
 ## Installation
 
-1.Clone the repository
+1.To be able to  run  the server code locally, you'll need to enter to folder, and install the required dependencies first
 ```
-git clone https://github.com/ApteroSAS/arena-client.git
-```
-
-2.To be able to  run  the server code locally, you'll need to enter to folder, and install the required dependencies first
-```
-cd my-colyseus-app
 npm install
 ```
-3.To configure the server,go to the development.env and  the arena.env  files and  set the room name and the maximum number of the allowed clients to connect into the room.
+2.To configure the server,go to the development.env and  the arena.env  files and  set the room name and the maximum number of the allowed clients to connect into the room.
 ```typescript
 ROOM_NAME=my_room
 NUM_CLIENTS=10
