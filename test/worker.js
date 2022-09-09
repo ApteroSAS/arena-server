@@ -73,7 +73,7 @@ try {
           yr: yr,
           lastUpdate: Date.now(),
         });
-      },5000);
+      },process.env.PATCH_RATES);
       // the value is 15
     });
     /*
